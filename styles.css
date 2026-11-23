@@ -75,7 +75,7 @@ textarea { resize: vertical; }
 .panel h3 { margin: 0 0 8px; font-size: 1.05rem; }
 .center-screen { min-height: 100vh; padding: 16px; }
 .center-panel { max-width: 400px; margin: 8vh auto 0; text-align: center; }
-.setup-logo { width: 72px; height: 72px; margin: 0 auto 8px; }
+.setup-logo { width: 96px; height: 96px; margin: 0 auto 8px; border-radius: 22px; }
 .big-emoji { font-size: 4rem; }
 
 /* ===== Yuqori panel ===== */
