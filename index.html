@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <meta name="theme-color" content="#6c4cf1">
+  <meta name="description" content="UNO Kids — bolalar uchun xavfsiz video ilova. Faqat ota-ona tanlagan YouTube videolari.">
+  <title>UNO Kids</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- ===== Birinchi ishga tushirish: PIN yaratish ===== -->
+  <section id="screen-setup" class="screen" hidden>
+    <div class="card center-card">
+      <div class="logo big">🦄 UNO Kids</div>
+      <h2>Xush kelibsiz!</h2>
+      <p>Avval ota-ona uchun 4 xonali PIN kod yarating. Bu kod bilan faqat siz videolarni qo'sha yoki o'chira olasiz.</p>
+      <input id="setup-pin" class="pin-input" type="password" inputmode="numeric" maxlength="4" placeholder="••••" autocomplete="off">
+      <input id="setup-pin2" class="pin-input" type="password" inputmode="numeric" maxlength="4" placeholder="Qayta kiriting" autocomplete="off">
+      <p id="setup-error" class="error"></p>
+      <button id="setup-save" class="btn primary">Saqlash</button>
+    </div>
+  </section>
+
+  <!-- ===== Bola rejimi ===== -->
+  <section id="screen-kids" class="screen" hidden>
+    <header class="kids-header">
+      <div class="logo">🦄 UNO Kids</div>
+      <button id="btn-parent" class="btn ghost small" aria-label="Ota-ona bo'limi">🔒 Ota-ona</button>
+    </header>
+    <nav id="categories" class="chips"></nav>
+    <main id="video-grid" class="grid"></main>
+    <div id="empty-kids" class="empty" hidden>
+      <div class="empty-emoji">📺</div>
+      <p>Hozircha videolar yo'q.<br>Ota-onangizdan video qo'shishni so'rang.</p>
+    </div>
+  </section>
+
+  <!-- ===== Video pleyer ===== -->
+  <section id="screen-player" class="screen player-screen" hidden>
+    <div id="player-wrap" class="player-wrap">
+      <div id="yt-player"></div>
+      <!-- Bu qatlam YouTube ichidagi barcha bosishlarni to'sadi (logotip, sarlavha, tavsiyalar) -->
+      <div id="click-shield" class="click-shield"></div>
+      <!-- Pauza / tugash pardasi: YouTube tavsiyalarini yashiradi -->
+      <div id="curtain" class="curtain" hidden>
+        <img id="curtain-thumb" alt="">
+        <div class="curtain-content">
+          <button id="curtain-play" class="big-play" aria-label="Davom etish">▶</button>
+          <div id="end-panel" class="end-panel" hidden>
+            <h3>Keyingi video <span id="countdown"></span></h3>
+            <div id="up-next" class="up-next"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="controls">
+      <button id="ctl-back" class="ctl" aria-label="Orqaga">⬅</button>
+      <button id="ctl-prev" class="ctl" aria-label="Oldingi">⏮</button>
+      <button id="ctl-play" class="ctl main" aria-label="Ijro / Pauza">⏸</button>
+      <button id="ctl-next" class="ctl" aria-label="Keyingi">⏭</button>
+      <input id="ctl-seek" class="seek" type="range" min="0" max="1000" value="0" aria-label="Vaqt">
+      <span id="ctl-time" class="time">0:00</span>
+      <button id="ctl-full" class="ctl" aria-label="To'liq ekran">⛶</button>
+    </div>
+    <div id="player-title" class="player-title"></div>
+  </section>
+
+  <!-- ===== Vaqt tugadi ===== -->
+  <section id="screen-timeup" class="screen" hidden>
+    <div class="card center-card">
+      <div class="empty-emoji">🌙</div>
+      <h2>Bugungi vaqt tugadi!</h2>
+      <p>Ko'zlaringizga dam bering. Ertaga yana ko'ramiz! 😊</p>
+      <button id="timeup-parent" class="btn ghost">🔒 Ota-ona</button>
+    </div>
+  </section>
+
+  <!-- ===== Ota-ona bo'limi ===== -->
+  <section id="screen-parent" class="screen" hidden>
+    <header class="kids-header">
+      <div class="logo">⚙️ Ota-ona bo'limi</div>
+      <button id="btn-exit-parent" class="btn primary small">✅ Bola rejimi</button>
+    </header>
+
+    <div class="parent-body">
+      <div class="card">
+        <h3>➕ Video qo'shish</h3>
+        <p class="hint">YouTube havolalarini qo'ying (har biri yangi qatorda). Video, Shorts, pleylist yoki kanal havolasi bo'lishi mumkin.
+          Pleylist va kanal uchun pastda YouTube API kalitini kiritish kerak.</p>
+        <textarea id="add-links" rows="4" placeholder="https://www.youtube.com/watch?v=...&#10;https://youtu.be/...&#10;https://www.youtube.com/playlist?list=...&#10;https://www.youtube.com/@kanal"></textarea>
+        <div class="row">
+          <label>Bo'lim:
+            <select id="add-category"></select>
+          </label>
+          <button id="add-btn" class="btn primary">Qo'shish</button>
+        </div>
+        <p id="add-status" class="status"></p>
+      </div>
+
+      <div class="card">
+        <h3>📁 Bo'limlar</h3>
+        <div id="cat-list" class="cat-list"></div>
+        <div class="row">
+          <input id="cat-new" type="text" placeholder="Yangi bo'lim (masalan: Multfilmlar)">
+          <button id="cat-add" class="btn">Qo'shish</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>🎬 Tasdiqlangan videolar (<span id="video-count">0</span>)</h3>
+        <input id="parent-search" type="search" placeholder="Qidirish...">
+        <div id="parent-list" class="parent-list"></div>
+      </div>
+
+      <div class="card">
+        <h3>🛡️ Xavfsizlik sozlamalari</h3>
+        <label class="field">Kunlik ko'rish vaqti (daqiqa, 0 = cheklovsiz)
+          <input id="set-limit" type="number" min="0" max="600" step="5">
+        </label>
+        <p class="hint">Bugun ko'rildi: <b id="used-today">0</b> daqiqa
+          <button id="reset-today" class="btn small ghost">Nolga tushirish</button></p>
+        <label class="check"><input id="set-shorts" type="checkbox"> Pleylist/kanaldan qo'shganda Shorts (60 soniyadan qisqa) videolarni o'tkazib yuborish</label>
+        <label class="field">Taqiqlangan so'zlar (vergul bilan). Sarlavhada shu so'z bo'lsa, pleylist/kanaldan qo'shilmaydi:
+          <input id="set-words" type="text" placeholder="prank, horror, qo'rqinchli">
+        </label>
+        <label class="field">Pleylist/kanaldan ko'pi bilan nechta video olinsin
+          <input id="set-max" type="number" min="1" max="500">
+        </label>
+        <button id="settings-save" class="btn primary">Saqlash</button>
+        <p id="settings-status" class="status"></p>
+      </div>
+
+      <div class="card">
+        <h3>🔑 YouTube API kaliti (ixtiyoriy)</h3>
+        <p class="hint">Alohida videolar kalitsiz ishlaydi. Pleylist yoki butun kanalni qo'shish uchun
+          <a href="https://console.cloud.google.com/apis/library/youtube.googleapis.com" target="_blank" rel="noopener">Google Cloud</a>
+          da bepul "YouTube Data API v3" kalitini oling. Kalit faqat shu qurilmada saqlanadi.</p>
+        <input id="set-apikey" type="password" placeholder="AIza..." autocomplete="off">
+        <button id="apikey-save" class="btn">Kalitni saqlash</button>
+      </div>
+
+      <div class="card">
+        <h3>🔐 PIN kodni o'zgartirish</h3>
+        <div class="row">
+          <input id="pin-new" class="pin-input small" type="password" inputmode="numeric" maxlength="4" placeholder="Yangi PIN">
+          <button id="pin-save" class="btn">O'zgartirish</button>
+        </div>
+        <p id="pin-status" class="status"></p>
+      </div>
+
+      <div class="card">
+        <h3>💾 Zaxira nusxa</h3>
+        <p class="hint">Ro'yxatni faylga saqlab, boshqa qurilmaga ko'chirishingiz mumkin.</p>
+        <div class="row">
+          <button id="export-btn" class="btn">⬇ Eksport</button>
+          <label class="btn">⬆ Import<input id="import-file" type="file" accept="application/json" hidden></label>
+        </div>
+        <p id="backup-status" class="status"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PIN so'rash oynasi ===== -->
+  <div id="pin-modal" class="modal" hidden>
+    <div class="card center-card">
+      <h3>🔒 Ota-ona PIN kodi</h3>
+      <div id="pin-dots" class="pin-dots"><span></span><span></span><span></span><span></span></div>
+      <div id="keypad" class="keypad"></div>
+      <p id="pin-error" class="error"></p>
+      <button id="pin-cancel" class="btn ghost">Bekor qilish</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
