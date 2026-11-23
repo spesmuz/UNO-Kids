@@ -85,7 +85,8 @@ textarea { resize: vertical; }
   padding: 0 8px 0 14px; background: var(--bg);
 }
 .brand { display: flex; align-items: center; gap: 6px; font-weight: 800; font-size: 1.2rem; letter-spacing: -.3px; }
-.brand img { width: 30px; height: 30px; }
+.brand img { width: 30px; height: 30px; border-radius: 8px; }
+.brand b { color: var(--red); font-weight: 800; }
 .top-actions { display: flex; gap: 2px; }
 
 .searchbar {
