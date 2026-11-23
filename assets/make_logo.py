@@ -5,7 +5,7 @@ import numpy as np, os
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
-CUT_Y = 627  # shu chiziqdan pasti (samolyot) olinmaydi
+CUT_Y = 720  # samolyot ham kiradi
 
 im = Image.open(os.path.join(HERE, 'uno-original.png')).convert('RGBA')
 a = np.array(im).astype(float)
@@ -21,14 +21,21 @@ inside = ((xx - 540) ** 2 + (yy - 540) ** 2 < 245 ** 2) & (yy < CUT_Y)
 soft = np.clip((score - 20) / 18, 0, 1) * inside
 
 mask = Image.fromarray((soft * 255).astype('uint8'))
-# Faqat asosiy (eng katta) bo'lakni qoldiramiz: mayda nuqtalar tozalanadi
-binm = mask.point(lambda v: 255 if v > 140 else 0)
-ys, xs = np.nonzero(np.array(binm))
-seed = (int(np.median(xs)), int(np.percentile(ys, 70)))
-while binm.getpixel(seed) != 255:
-    seed = (seed[0], seed[1] + 1)
-ImageDraw.floodfill(binm, seed, 128)
-keep = np.array(binm) == 128
+binm = mask.point(lambda v: 255 if v > 140 else 0).filter(ImageFilter.MedianFilter(3))
+# Asosiy bo'laklarni ularning ichidagi nuqtalardan to'ldirib olamiz: haykallar, samolyot, dvigatellar.
+# Shu bo'laklarga ulanmagan mayda nuqtalar tashlab yuboriladi.
+label = binm.copy()
+SEEDS = [(430, 420), (540, 420), (650, 420), (540, 690), (380, 662), (700, 662), (475, 684), (605, 684)]
+for sx, sy in SEEDS:
+    best = None
+    for dx in range(-12, 13):
+        for dy in range(-12, 13):
+            if label.getpixel((sx + dx, sy + dy)) == 255:
+                best = (sx + dx, sy + dy); break
+        if best: break
+    if best:
+        ImageDraw.floodfill(label, best, 128)
+keep = np.array(label) == 128
 keep_img = Image.fromarray((keep * 255).astype('uint8')).filter(ImageFilter.MaxFilter(3))
 keep_arr = np.array(keep_img) > 0
 # Ichki och-oltin joylar (yaltirash) ham to'liq oq bo'lsin: past chegara bilan tana, chetidan 2px ichkarida

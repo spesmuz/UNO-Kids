@@ -1,5 +1,5 @@
 // UNO Kids service worker: ilova qobig'ini keshlaydi (videolar internet orqali o'ynaydi).
-const CACHE = 'uno-kids-v4';
+const CACHE = 'uno-kids-v5';
 const SHELL = ['./', 'index.html', 'styles.css', 'app.js', 'manifest.json', 'icon-180.png', 'icon-192.png', 'icon-512.png'];
 
 self.addEventListener('install', (e) => {
