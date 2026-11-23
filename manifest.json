@@ -4,10 +4,10 @@
   "description": "Bolalar uchun xavfsiz video ilova: faqat ota-ona tanlagan YouTube videolari.",
   "start_url": "./",
   "scope": "./",
-  "display": "fullscreen",
+  "display": "standalone",
   "orientation": "any",
-  "background_color": "#fff8ec",
-  "theme_color": "#6c4cf1",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
   "lang": "uz",
   "icons": [
     { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
