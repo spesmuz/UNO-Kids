@@ -5,6 +5,10 @@ YouTube tavsiyalari, qidiruv, izohlar va boshqa keraksiz narsalar ko'rsatilmaydi
 
 ## Imkoniyatlar
 
+- **Tanish interfeys** — mashhur video ilovalar uslubida: bosh sahifa lentasi, kategoriya chiplari, Shorts (vertikal aylantirish),
+  kanallar, "Siz" sahifasi (tarix, yoqqan videolar), qidiruv, pastki menyu, mini-pleyer, avto-ijro, ikki marta teginib 10 soniya o'tkazish,
+  to'liq ekran va qorong'i rejim. Logotip va nom — o'zimizniki (UNO Kids).
+
 - **Faqat tasdiqlangan videolar.** Video, Shorts, pleylist yoki kanal havolasini qo'ysangiz, ilova faqat o'sha videolarni ko'rsatadi.
 - **YouTube'ga chiqib ketib bo'lmaydi.** Pleyer ustida himoya qatlami bor: YouTube logotipi, sarlavha va tavsiyalarni bosib bo'lmaydi.
   Pauza qilinganda yoki video tugaganda YouTube'ning "boshqa videolar" oynasi yopiladi, uning o'rniga **sizning ro'yxatingizdagi** keyingi videolar chiqadi.

@@ -4,7 +4,7 @@ const { parseYouTube, isoDurationToSec } = require('../app.js');
 const cases = [
   ['https://www.youtube.com/watch?v=dQw4w9WgXcQ', { type: 'video', id: 'dQw4w9WgXcQ' }],
   ['https://youtu.be/dQw4w9WgXcQ?si=abc', { type: 'video', id: 'dQw4w9WgXcQ' }],
-  ['youtube.com/shorts/dQw4w9WgXcQ', { type: 'video', id: 'dQw4w9WgXcQ' }],
+  ['youtube.com/shorts/dQw4w9WgXcQ', { type: 'video', id: 'dQw4w9WgXcQ', short: true }],
   ['https://m.youtube.com/watch?v=dQw4w9WgXcQ&list=PL123', { type: 'video', id: 'dQw4w9WgXcQ' }],
   ['https://www.youtube.com/embed/dQw4w9WgXcQ', { type: 'video', id: 'dQw4w9WgXcQ' }],
   ['https://www.youtube.com/live/dQw4w9WgXcQ', { type: 'video', id: 'dQw4w9WgXcQ' }],
