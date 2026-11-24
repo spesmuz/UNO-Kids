@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Makler.uz — ko'chmas mulk e'lonlari</title>
+  <meta name="description" content="O'zbekiston bo'ylab kvartira, hovli, ofis va yer uchastkalarini sotish va ijaraga berish e'lonlari.">
+  <meta name="theme-color" content="#0f766e">
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap topbar-in">
+      <a href="#/" class="logo" aria-label="Makler.uz bosh sahifa">
+        <img src="assets/logo.svg" alt="" width="32" height="32">
+        <span>Makler<b>.uz</b></span>
+      </a>
+      <nav class="topnav">
+        <a href="#/?deal=sale">Sotuv</a>
+        <a href="#/?deal=rent">Ijara</a>
+        <a href="#/favorites" class="fav-link">♡ Saralangan <span id="favCount" class="badge" hidden>0</span></a>
+      </nav>
+      <a href="#/new" class="btn btn-primary">+ E'lon joylash</a>
+    </div>
+  </header>
+
+  <main id="app"></main>
+
+  <footer class="footer">
+    <div class="wrap footer-in">
+      <div>
+        <div class="logo logo-sm"><img src="assets/logo.svg" alt="" width="24" height="24"><span>Makler<b>.uz</b></span></div>
+        <p class="muted">O'zbekiston bo'ylab ko'chmas mulk e'lonlari. Prototip versiyasi.</p>
+      </div>
+      <p class="muted">© 2026 Makler.uz</p>
+    </div>
+  </footer>
+
+  <div id="toast" class="toast" role="status" hidden></div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
