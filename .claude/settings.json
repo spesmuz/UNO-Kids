@@ -1,3 +1,8 @@
 {
-  "enabledMcpjsonServers": ["perplexity", "playwright", "firecrawl", "higgsfield", "chrome-devtools"]
+  "enabledMcpjsonServers": [
+    "perplexity",
+    "playwright",
+    "firecrawl",
+    "chrome-devtools"
+  ]
 }
