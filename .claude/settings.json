@@ -4,5 +4,17 @@
     "playwright",
     "firecrawl",
     "chrome-devtools"
-  ]
+  ],
+  "enabledPlugins": {
+    "claude-code-setup@anthropic-plugin-directory": true,
+    "claude-mem@thedotmack": true
+  },
+  "extraKnownMarketplaces": {
+    "thedotmack": {
+      "source": {
+        "source": "github",
+        "repo": "thedotmack/claude-mem"
+      }
+    }
+  }
 }
